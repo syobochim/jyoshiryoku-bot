@@ -1,4 +1,9 @@
 (ns jyoshiryoku-bot.core
-  (:import [twitter4j TwitterFactory]))
+  (:import [twitter4j TwitterFactory Twitter]))
 
-(TwitterFactory)
+(defn userinfo []
+  (let [twitter (.getInstance (TwitterFactory.)) , user (.verifyCredentials twitter)]
+    (.getName user)
+    (.getScreenName user)))
+
+(userinfo)
