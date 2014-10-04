@@ -1,16 +1,17 @@
 (ns jyoshiryoku-bot.core
-  (:import [twitter4j TwitterFactory Twitter]))
+  (:import [twitter4j TwitterFactory Twitter Paging]))
+
+(defn mytwitter []
+  (.getInstance (TwitterFactory.)))
 
 (defn tweettimeline [message]
-  (let [twitter (.getInstance (TwitterFactory.)) , user (.verifyCredentials twitter)]
+  (let [twitter (mytwitter) , user (.verifyCredentials twitter)]
     (.updateStatus twitter message)
     ))
 
 (defn mymentionlist []
-  (.getMentionsTimeline (.getInstance (TwitterFactory.))))
+  (.getMentionsTimeline (mytwitter)))
 
-(defn getmymention []
-  (let [twitter (.getInstance (TwitterFactory.))]
-    (mymentionlist)
-    ))
-
+(defn getmytweet []
+  (let [twitter (mytwitter)]
+    (map #(. %1 getText) (.getUserTimeline twitter (Paging. (Integer. 1) (Integer. 200))))))
