@@ -1,5 +1,4 @@
 (ns jyoshiryoku-bot.kaiseki
-  (:require [jyoshiryoku-bot.core :as core])
   (:import (org.atilika.kuromoji Token Tokenizer)))
 
 (defn tokenize [text]
@@ -49,15 +48,12 @@
          word word]
 ;    (println (str "*" word))
     (if word
-      (if (or (= word "/") (= word "？") )
+      (if (= word "\"")
         sentence
         (recur (str sentence word) (select-next-word word-map word)))
       sentence)))
 
-(defn init []
+(defn init [tweetmap]
   (dosync
    (ref-set *words*
-            (load-text (apply pr-str (core/getmytweet))))))
-
-(init)
-(create-sentence @*words* "何")
+            (load-text (apply pr-str (tweetmap))))))
