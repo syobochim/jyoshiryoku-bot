@@ -24,7 +24,7 @@
       {:userName mentionUser :text mentionText :id mentionId}))
 
 (def paging
- (Paging. (Integer. 1) (Integer. 20)))
+ (Paging. (Integer. 1) (Integer. 50)))
 
 (defn getmytweet []
   (let [twitter (mytwitter)]
@@ -33,7 +33,8 @@
 (defn -main []
   (kaiseki/init getmytweet)
   (when true
-    (let [info mentionInfo]
-      (tweettimeline (str "@" (:userName info) " "
-                          (kaiseki/create-sentence @kaiseki/*words* (:text info))))))
-    (Thread/sleep (* 1000 60 10)))
+    (let [info (mentionInfo)]
+      (if (= "syobochim" (:userName info))
+        (tweettimeline (str "@" (:userName info) " "
+                            (kaiseki/create-sentence @kaiseki/*words* (:text info))))))
+    (Thread/sleep (* 1000 60 10))))
