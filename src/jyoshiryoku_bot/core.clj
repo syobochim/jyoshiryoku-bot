@@ -17,17 +17,23 @@
 (defn resentmention [] (first (mymention)))
 
 (defn mentionInfo []
-    (let [mentionUser (.getScreenName (.getUser (resentmention)))
-          mentionText (str-utils/re-sub #"@syobochim\s" "" (.getText (resentmention)))]
-      {:userName mentionUser :text mentionText}))
+    (let [mention (resentmention)
+          mentionUser (.getScreenName (.getUser mention))
+          mentionText (str-utils/re-sub #"@syobochim\s" "" (.getText mention))
+          mentionId (.getId mention)]
+      {:userName mentionUser :text mentionText :id mentionId}))
 
 (def paging
- (Paging. (Integer. 1) (Integer. 5)))
+ (Paging. (Integer. 1) (Integer. 20)))
 
 (defn getmytweet []
   (let [twitter (mytwitter)]
      (map #(. %1 getText) (.getUserTimeline twitter))))
 
-(kaiseki/init getmytweet)
-
-(println (kaiseki/create-sentence @kaiseki/*words* (:text (mentionInfo))))
+(defn -main []
+  (kaiseki/init getmytweet)
+  (when true
+    (let [info mentionInfo]
+      (tweettimeline (str "@" (:userName info) " "
+                          (kaiseki/create-sentence @kaiseki/*words* (:text info))))))
+    (Thread/sleep (* 1000 60 10)))
