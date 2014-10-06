@@ -24,6 +24,10 @@
           mentionId (.getId mention)]
       {:userName mentionUser :text mentionText :id mentionId}))
 
+(defn searchword []
+  (kaiseki/token-word
+   (first (kaiseki/tokenize (:text (mentionInfo))))))
+
 (def paging
  (Paging. (Integer. 1) (Integer. 50)))
 
@@ -39,5 +43,5 @@
     (let [info (mentionInfo)]
       (if (= "syobochim" (:userName info))
         (tweettimeline (str "@" (:userName info) " "
-                            (kaiseki/create-sentence @kaiseki/*words* (:text info))))))
+                            (kaiseki/create-sentence @kaiseki/*words* (searchword))))))
     (Thread/sleep (* 1000 60 10))))
