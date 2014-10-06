@@ -1,6 +1,7 @@
 (ns jyoshiryoku-bot.core
   (:import [twitter4j TwitterFactory Twitter Paging])
   (:require [clojure.contrib.str-utils :as str-utils]
+            [clojure.java.io :as io]
             [jyoshiryoku-bot.kaiseki :as kaiseki])
   (:gen-class))
 
@@ -28,10 +29,12 @@
 
 (defn getmytweet []
   (let [twitter (mytwitter)]
-     (map #(. %1 getText) (.getUserTimeline twitter))))
+     (map #(. %1 getText) (.getUserTimeline twitter paging))))
 
 (defn -main []
-  (kaiseki/init getmytweet)
+  (with-open [fout (io/writer "tweet.txt" :append true)]
+    (.write fout (apply pr-str (getmytweet))))
+  (kaiseki/init "tweet.txt")
   (when true
     (let [info (mentionInfo)]
       (if (= "syobochim" (:userName info))

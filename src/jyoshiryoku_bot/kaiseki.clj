@@ -25,8 +25,8 @@
   (let [word2-map (get m word1 {})]
     (assoc m word1 (inc-map-value word2-map word2))))
 
-(defn load-text [text]
-  (let [text text
+(defn load-text [file-name]
+  (let [text (slurp file-name)
         tokens (tokenize text)]
     (reduce (fn [m [token1 token2]]
               (let [word1 (token-word token1)
@@ -46,14 +46,13 @@
 (defn create-sentence [word-map word]
   (loop [sentence ""
          word word]
-;    (println (str "*" word))
     (if word
       (if (= word "\"")
         sentence
         (recur (str sentence word) (select-next-word word-map word)))
       sentence)))
 
-(defn init [tweetmap]
+(defn init [tweettxt]
   (dosync
    (ref-set *words*
-            (load-text (apply pr-str (tweetmap))))))
+            (load-text tweettxt))))
