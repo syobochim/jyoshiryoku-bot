@@ -29,7 +29,7 @@
    (first (kaiseki/tokenize (:text (mentionInfo))))))
 
 (def paging
- (Paging. (Integer. 1) (Integer. 50)))
+ (Paging. (int 1) (int 50)))
 
 (defn getmytweet []
   (let [twitter (mytwitter)]
