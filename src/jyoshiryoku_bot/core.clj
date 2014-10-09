@@ -9,7 +9,7 @@
   (.getInstance (TwitterFactory.)))
 
 (defn tweettimeline [message]
-  (let [twitter (mytwitter) , user (.verifyCredentials twitter)]
+  (let [twitter (mytwitter)]
     (.updateStatus twitter message)))
 
 (defn mymention []
