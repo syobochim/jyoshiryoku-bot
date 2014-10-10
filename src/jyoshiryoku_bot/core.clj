@@ -45,4 +45,4 @@
         ((reset! info (╹◡╹))
          (tweettimeline (str ".@" (:userName @info) " "
                             (kaiseki/create-sentence @kaiseki/*words* (ºωº))))))
-      (Thread/sleep (* 1000 60 1)))))
+      (Thread/sleep (* 1000 60 2)))))
