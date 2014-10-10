@@ -5,44 +5,44 @@
             [jyoshiryoku-bot.kaiseki :as kaiseki])
   (:gen-class))
 
-(defn mytwitter []
+(defn •ॢ◡-ॢ []
   (.getInstance (TwitterFactory.)))
 
 (defn tweettimeline [message]
-  (let [twitter (mytwitter)]
+  (let [twitter (•ॢ◡-ॢ)]
     (.updateStatus twitter message)))
 
-(defn mymention []
-  (lazy-seq (.getMentionsTimeline (mytwitter))))
+(defn ∩ˇωˇ∩ []
+  (lazy-seq (.getMentionsTimeline (•ॢ◡-ॢ))))
 
-(defn resentmention [] (first (mymention)))
+(defn ฅ'ω'ฅ [] (first (∩ˇωˇ∩)))
 
-(defn mentionInfo []
-  (let [mention (resentmention)
+(defn ╹◡╹ []
+  (let [mention (ฅ'ω'ฅ)
         mentionUser (.getScreenName (.getUser mention))
         mentionText (str-utils/re-sub #"(@.*?\s)+" "" (.getText mention))
         mentionId (.getId mention)]
     {:userName mentionUser :text mentionText :id mentionId}))
 
-(defn searchword []
+(defn ºωº []
   (kaiseki/token-word
-   (first (kaiseki/tokenize (:text (mentionInfo))))))
+   (first (kaiseki/tokenize (:text (╹◡╹))))))
 
 (def paging
  (Paging. (int 1) (int 50)))
 
-(defn getmytweet []
-  (let [twitter (mytwitter)]
+(defn ⑅ˊᵕˋ⑅ []
+  (let [twitter (•ॢ◡-ॢ)]
      (map #(. %1 getText) (.getUserTimeline twitter paging))))
 
 (defn -main []
   (with-open [fout (io/writer "tweet.txt" :append true)]
-    (.write fout (apply pr-str (getmytweet))))
+    (.write fout (apply pr-str (⑅ˊᵕˋ⑅))))
   (kaiseki/init "tweet.txt")
-  (let [info (atom (mentionInfo))]
+  (let [info (atom (╹◡╹))]
     (while true
-      (if-not (= @info (mentionInfo))
-        ((reset! info (mentionInfo))
+      (if-not (= @info (╹◡╹))
+        ((reset! info (╹◡╹))
          (tweettimeline (str ".@" (:userName @info) " "
-                            (kaiseki/create-sentence @kaiseki/*words* (searchword))))))
-      (Thread/sleep (* 1000 60 2)))))
+                            (kaiseki/create-sentence @kaiseki/*words* (ºωº))))))
+      (Thread/sleep (* 1000 60 1)))))
