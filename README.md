@@ -1,14 +1,24 @@
-# jyoshiryoku-bot
+# 女子力bot
 
-A Clojure library designed to ... well, that part is up to you.
+[Clojure夜会](http://01e8c979c4e57f83dd63bf3d4a.doorkeeper.jp/events/14626)発表用bot  
 
-## Usage
+# branch
 
-FIXME
+可読性と引き換えに女子力があがるbranchはこちら
 
-## License
+- jyoshiryoku
 
-Copyright © 2014 FIXME
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+# 出来る事
+
+- 2分に自分あてのメンションを取得する
+- 一番最新のメンションのユーザとメンション内容を取得
+- メンション内容から、自分の直近のツイートをもとに文章を作成する(マルコフ連鎖) 
+- メンションをくれた人にメンションをかえす
+
+
+### マルコフ連鎖について
+
+マルコフ連鎖を実装しているkaiseki.cljの内容は、このページからいただいてきました。  
+
+http://takeisamemo.blogspot.jp/2013/12/clojure_13.html
